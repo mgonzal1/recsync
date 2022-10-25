@@ -34,6 +34,7 @@ class Announcer(protocol.DatagramProtocol):
 
     def startProtocol(self):
         _log.info('setup Announcer')
+        self.transport.setTTL(32)
         self.D = self.reactor.callLater(0, self.sendOne)
         # we won't process any receieved traffic, so no reason to wake
         # up for it...
