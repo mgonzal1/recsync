@@ -28,13 +28,13 @@ class Announcer(protocol.DatagramProtocol):
         self.delay = period
         self.udps = udpaddrs
         self.udpErr = set()
+        self.transport.setTTL(32)
         self.D = None
         if len(self.udps)==0:
             raise RuntimeError('Announce list is empty at start time...')
 
     def startProtocol(self):
         _log.info('setup Announcer')
-        self.transport.setTTL(32)
         self.D = self.reactor.callLater(0, self.sendOne)
         # we won't process any receieved traffic, so no reason to wake
         # up for it...
