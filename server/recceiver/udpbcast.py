@@ -31,5 +31,6 @@ class SharedUDPServer(internet.UDPServer):
     def _getPort(self):
         R = getattr(self, 'reactor', reactor)
         port = SharedUDP(reactor=R, *self.args, **self.kwargs)
+        port.setTTL(32)
         port.startListening()
         return port
